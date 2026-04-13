@@ -1,85 +1,247 @@
 #include <Arduino.h>
 #include "MLP.h"
+#include <math.h>
 
+// Define the size of the input vector (number of features)
 #define INPUT_SIZE 120
+
+// Define the number of output classes
 #define OUTPUT_SIZE 12
 
+// Number of inference runs for timing analysis
+#define NUM_RUNS 10
+
+// Use the TensorFlores namespace from Conect2AI
 using namespace Conect2AI::TensorFlores;
 
+// Instantiate the Multilayer Perceptron model
 MultilayerPerceptron model;
 
-float sample_image[INPUT_SIZE] = { 2.29426865e-02, -7.68611610e-01, -1.30059874e+00,  7.52213955e-01,
-       -1.96984887e-01,  4.05343860e-01,  5.08008301e-01, -2.29201317e-01,
-        9.07132328e-01, -1.65410495e+00, -6.14133358e-01, -8.71297657e-01,
-       -5.63425779e-01,  5.30077398e-01,  8.37778807e-01,  8.17484707e-02,
-        1.46549165e+00, -6.14006780e-02, -5.03313720e-01, -8.32001626e-01,
-        9.45213795e-01,  4.61650878e-01,  4.60534781e-01,  1.40091681e+00,
-        6.29026830e-01,  8.77103448e-01,  1.42107856e+00,  5.95286721e-04,
-        1.17987704e+00,  2.24744391e+00, -8.86832625e-02, -6.70963943e-01,
-       -1.03241956e+00,  9.18861687e-01, -3.18768948e-01,  2.30453563e+00,
-       -6.70090675e-01,  1.39495528e+00,  2.19294357e+00, -2.27763765e-02,
-       -1.19718134e+00,  1.58877146e+00, -7.60666370e-01, -1.22667782e-01,
-       -3.04426134e-01,  6.44627035e-01, -4.99730229e-01, -5.78888245e-02,
-        5.32572508e-01, -8.87444854e-01, -1.69285044e-01,  6.06790595e-02,
-        1.10981989e+00,  1.55494332e+00,  9.64264154e-01,  2.35899138e+00,
-       -2.20502615e+00,  2.86591977e-01,  1.34274459e+00, -1.40785599e+00,
-       -5.60967743e-01, -1.74072698e-01,  6.48577809e-01,  4.72830117e-01,
-       -1.73081324e-01,  3.74036223e-01,  4.94582802e-01,  7.78570890e-01,
-       -1.08089364e+00,  1.27601586e-02, -3.98783863e-01,  8.52958500e-01,
-        5.92296839e-01, -9.18888509e-01,  5.44260204e-01, -1.02435164e-02,
-        5.41304499e-02,  1.03927836e-01, -7.57121921e-01, -1.34331369e+00,
-       -1.55745029e+00,  6.59171045e-01,  1.37273741e+00, -6.59909785e-01,
-       -2.15635255e-01,  1.31214058e+00,  5.98880768e-01,  1.04625195e-01,
-        6.89041615e-01, -1.47521809e-01,  1.22702263e-01, -4.29141164e-01,
-       -1.37940681e+00,  1.82346985e-01, -4.69877958e-01,  1.00364065e+00,
-       -7.11526394e-01,  7.96248376e-01,  9.51828480e-01, -9.12397429e-02,
-        2.66518295e-01,  5.41434109e-01, -5.62772453e-01,  3.13862771e-01,
-       -8.56458187e-01, -5.62445939e-01, -1.09793627e+00, -1.30624190e-01,
-        1.99684105e-03, -3.34246248e-01,  3.98076400e-02,  1.05965912e+00,
-        4.40330863e-01, -5.32004058e-01,  1.76592655e-02,  1.75989103e+00,
-       -1.84074235e+00, -1.00492561e+00, -3.88615161e-01, -1.11199367e+00
-  // coloque aqui as 120 features
-};
+// Input feature vector (preprocessed data sample)
+float input[INPUT_SIZE] = {
 
-void setup() {
+    5.922186374664307,
+    -4.324369430541992,
+    -8.462364196777344,
+    -12.641783714294434,
+    -14.989919662475586,
+    -17.428586959838867,
+    -18.9476375579834,
+    -17.287843704223633,
+    -17.642295837402344,
+    -19.6263370513916,
+    -19.309566497802734,
+    -20.470748901367188,
+    -21.07651138305664,
+    -21.017982482910156,
+    -19.943641662597656,
+    -20.134105682373047,
+    -20.922216415405273,
+    -21.372644424438477,
+    -22.643959045410156,
+    -24.88400650024414,
+    -24.095199584960938,
+    -23.376392364501953,
+    -23.0485897064209,
+    -24.296472549438477,
+    -26.990890502929688,
+    -28.53644561767578,
+    -28.737096786499023,
+    -29.233728408813477,
+    -29.603487014770508,
+    -28.8476505279541,
+    2.9609086513519287,
+    3.5317087173461914,
+    3.386260509490967,
+    4.149324417114258,
+    3.6132500171661377,
+    3.1774954795837402,
+    3.912832260131836,
+    4.33785343170166,
+    3.97550106048584,
+    3.3986077308654785,
+    3.6414849758148193,
+    3.567225456237793,
+    3.817584276199341,
+    3.700486660003662,
+    3.56339693069458,
+    3.235038995742798,
+    3.149056911468506,
+    3.205322742462158,
+    2.991994857788086,
+    3.0833184719085693,
+    2.703706979751587,
+    2.761458158493042,
+    2.7861740589141846,
+    2.383594274520874,
+    2.5278103351593018,
+    2.298642873764038,
+    2.408348321914673,
+    2.103238821029663,
+    2.1561930179595947,
+    2.3028712272644043,
+    -0.0009165735100395977,
+    0.015078498050570488,
+    -0.01131165400147438,
+    -0.06368035078048706,
+    0.025812463834881783,
+    -0.04851869121193886,
+    -0.09998814016580582,
+    -0.04268302768468857,
+    -0.023275740444660187,
+    -0.07588347792625427,
+    0.014035765081644058,
+    0.01969206891953945,
+    -0.12232267111539841,
+    -0.08317793160676956,
+    -0.07838603854179382,
+    -0.09463519603013992,
+    0.01398052554577589,
+    -0.03609450161457062,
+    -0.05198933184146881,
+    -0.002386815380305052,
+    -0.02785995975136757,
+    0.011771152727305889,
+    -0.055712420493364334,
+    -0.08136770129203796,
+    -0.008295270614326,
+    0.021997803822159767,
+    0.033428240567445755,
+    -0.012807807885110378,
+    -0.046474333852529526,
+    -0.05318339169025421,
+    0.29608795046806335,
+    0.47789502143859863,
+    0.3992801606655121,
+    0.6192410588264465,
+    0.36708492040634155,
+    0.5396157503128052,
+    0.5733515024185181,
+    0.5509222149848938,
+    0.5538081526756287,
+    0.40036270022392273,
+    0.45095667243003845,
+    0.4297320246696472,
+    0.5983821749687195,
+    0.5677046775817871,
+    0.3804335594177246,
+    0.42989465594291687,
+    0.31589192152023315,
+    0.460214227437973,
+    0.4485626220703125,
+    0.4397154748439789,
+    0.624186635017395,
+    0.4410053789615631,
+    0.33400383591651917,
+    0.3454917371273041,
+    0.3698458671569824,
+    0.2796242833137512,
+    0.46625033020973206,
+    0.3940142095088959,
+    0.34271642565727234,
+    0.3703310787677765};
 
+// Arduino setup function (runs once at startup)
+void setup()
+{
+  // Initialize serial communication at 115200 baud rate
   Serial.begin(115200);
-  while (!Serial) {;}
 
-  Serial.println("Inicializando MLP...");
-  Serial.println("Realizando inferência...");
+  // Small delay to ensure proper initialization
+  delay(1000);
 
-  // executa predição
-  float* predictions = model.predict(sample_image);
+  // Informational messages
+  Serial.println("Initializing MLP...");
+  Serial.println("Ready for continuous inference...");
+}
 
-  Serial.println("Probabilidades de saída:");
+// Arduino loop function (runs repeatedly)
+void loop()
+{
+  // Array to store execution times for each inference run
+  unsigned long times[NUM_RUNS];
 
+  // Pointer to store model predictions
+  float *predictions;
+
+  // First inference (warm-up run, not considered in average)
+  predictions = model.predict(input);
+
+  // Free dynamically allocated memory
+  delete[] predictions;
+
+  // Perform multiple inference runs for timing analysis
+  for (int i = 0; i < NUM_RUNS; i++)
+  {
+    // Record start time (in microseconds)
+    unsigned long start_time = micros();
+
+    // Perform inference
+    predictions = model.predict(input);
+
+    // Record end time
+    unsigned long end_time = micros();
+
+    // Store execution time
+    times[i] = end_time - start_time;
+
+    // Free memory after each inference
+    delete[] predictions;
+  }
+
+  // Compute the sum of execution times (excluding first run)
+  unsigned long sum = 0;
+
+  for (int i = 1; i < NUM_RUNS; i++)
+  {
+    sum += times[i];
+  }
+
+  // Calculate average inference time (excluding warm-up run)
+  float avg_time = sum / (float)(NUM_RUNS - 1);
+
+  Serial.println("--------------------");
+
+  // Print average inference time in microseconds
+  Serial.print("Average time: ");
+  Serial.print(avg_time);
+  Serial.println(" us");
+
+  // Print average inference time in milliseconds
+  Serial.print("Average time: ");
+  Serial.print(avg_time / 1000.0);
+  Serial.println(" ms");
+
+  // Perform a final inference to obtain prediction results
+  predictions = model.predict(input);
+
+  // Variables to determine the predicted class
   int predicted_class = -1;
   float max_prob = -1.0;
 
-  for (int i = 0; i < OUTPUT_SIZE; i++) {
-
-    Serial.print("Classe ");
-    Serial.print(i);
-    Serial.print(": ");
-    Serial.println(predictions[i], 7);
-
-    if (predictions[i] > max_prob) {
+  // Find the class with the highest probability
+  for (int i = 0; i < OUTPUT_SIZE; i++)
+  {
+    if (predictions[i] > max_prob)
+    {
       max_prob = predictions[i];
       predicted_class = i;
     }
   }
 
-  Serial.println("--------------------");
-  Serial.print("Classe prevista: ");
+  // Print predicted class index
+  Serial.print("Predicted class: ");
   Serial.println(predicted_class);
 
-  Serial.print("Probabilidade: ");
-  Serial.println(max_prob, 7);
+  // Print associated probability with high precision
+  Serial.print("Probability: ");
+  Serial.println(max_prob, 6);
+
   Serial.println("--------------------");
 
-  delete[] predictions;  // libera memória
-}
+  // Free allocated memory
+  delete[] predictions;
 
-void loop() {
+  // Delay before next loop iteration
+  delay(100);
 }
