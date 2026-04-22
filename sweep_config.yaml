@@ -1,0 +1,32 @@
+program: train_sweep.py
+method: grid                # pode ser alterado para 'bayes' ou 'random'
+metric:
+  name: accuracy_test
+  goal: maximize
+
+parameters:
+  # ========== HIPERPARÂMETROS GLOBAIS ==========
+  model_name:
+    values: ['KAN']
+  feature_type:
+    values: ['mfcc', 'mfe']
+  epochs:
+    values: [100]
+  lr:
+    values: [0.001]
+  batch_size:
+    values: [32]
+  optimizer:
+    values: ['adam', 'sgd', 'adamw'] # KAN: Adam, LBFGS
+  weight_decay:
+    values: [1e-5]
+
+  # ========== KAN ==========
+  kan_hidden:
+    values: [5, 10, 15]
+  kan_grid:
+    values: [3, 5, 7]
+  kan_k:
+    values: [3, 5]                 # ordem da spline
+  kan_lambda:
+    values: [0.0001, 0.001, 0.01]
