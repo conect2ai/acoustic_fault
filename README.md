@@ -175,12 +175,19 @@ The study addresses the following research questions (**RQs**):
 
 ## 📚 Arduino Code
 
--  [![Jupyter](https://img.shields.io/badge/Arduino-00878F?logo=arduino&logoColor=fff&style=plastic)]( ) Global Model
+-  [![Jupyter](https://img.shields.io/badge/Arduino-00878F?logo=arduino&logoColor=fff&style=plastic)](https://github.com/conect2ai/acoustic_fault/tree/main/results/arduino_code/CNN)  Convolutional Neural Networks (CNN)
 
 
--  [![Jupyter](https://img.shields.io/badge/Arduino-00878F?logo=arduino&logoColor=fff&style=plastic)]( ) Moe Model
+-  [![Jupyter](https://img.shields.io/badge/Arduino-00878F?logo=arduino&logoColor=fff&style=plastic)](https://github.com/conect2ai/acoustic_fault/tree/main/results/arduino_code/FAN)  Fourier Analysis Networks (FAN)
 
 
+-  [![Jupyter](https://img.shields.io/badge/Arduino-00878F?logo=arduino&logoColor=fff&style=plastic)](https://github.com/conect2ai/acoustic_fault/tree/main/results/arduino_code/MLP) Multi‑Layer Perceptrons (MLP)
+
+
+-  [![Jupyter](https://img.shields.io/badge/Arduino-00878F?logo=arduino&logoColor=fff&style=plastic)](https://github.com/conect2ai/acoustic_fault/tree/main/results/arduino_code/KAN)  Kolmogorov‑Arnold Networks (KAN)
+
+
+-  [![Jupyter](https://img.shields.io/badge/Arduino-00878F?logo=arduino&logoColor=fff&style=plastic)](https://github.com/conect2ai/acoustic_fault/tree/main/results/arduino_code/RBFN)  Radial Basis Function Networks (RBFN)
 
 
 ## 📊 Results Overview
