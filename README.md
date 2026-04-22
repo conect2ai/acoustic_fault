@@ -58,6 +58,13 @@ cd acoustic_fault
 python -m venv .venv
 ```
 
+Download PDF
+```bash
+aws configure set aws_access_key_id ...
+aws configure set aws_secret_access_key ...
+aws s3 cp s3://ieee-dataport/data/1383497/91533/Base_de_Dados_0.rar
+```
+
 Activate the environment:
 
 ```bash
