@@ -1,0 +1,46 @@
+#ifndef NEURAL_NETWORK_H
+#define NEURAL_NETWORK_H
+
+#include <Arduino.h>
+
+// --- Architecture Constants ---
+// Automatically generated from trained model
+
+// Maximum required buffer size
+#define MAX_BUFFER_SIZE 5120
+
+// Input image size
+#define INPUT_SIZE 120
+#define INPUT_CHANNELS 1
+#define INPUT_HEIGHT 10
+#define INPUT_WIDTH 12
+
+// Convolutional Layer 0
+#define CONV0_IN_CHANNELS 1
+#define CONV0_IN_H 10
+#define CONV0_IN_W 12
+#define CONV0_NUM_FILTERS 64
+#define CONV0_KERNEL_SIZE 3
+#define CONV0_OUT_H 8
+#define CONV0_OUT_W 10
+
+// Pooling Layer 0
+#define POOL0_CHANNELS 64
+#define POOL0_IN_H 8
+#define POOL0_IN_W 10
+#define POOL0_OUT_H 4
+#define POOL0_OUT_W 5
+
+// Dense Layer 0
+#define DENSE0_INPUT_SIZE 1280
+#define DENSE0_OUTPUT_SIZE 32
+
+// Dense Layer 1
+#define DENSE1_INPUT_SIZE 32
+#define DENSE1_OUTPUT_SIZE 12
+
+// Function prototypes
+void setup_network();
+float* predict(float* input_data);
+
+#endif // NEURAL_NETWORK_H
