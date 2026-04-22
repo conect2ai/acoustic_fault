@@ -58,7 +58,8 @@ cd acoustic_fault
 python -m venv .venv
 ```
 
-Download PDF
+Download Dataset
+
 ```bash
 aws configure set aws_access_key_id ...
 aws configure set aws_secret_access_key ...
@@ -164,12 +165,13 @@ The study addresses the following research questions (**RQs**):
 
 ## 📚 Jupyter Notebooks
 
--  [![Python](https://img.shields.io/badge/-Notebook-191A1B?style=flat-square&logo=jupyter)]( )  Dataset Generator
+-  [![Python](https://img.shields.io/badge/-Notebook-191A1B?style=flat-square&logo=jupyter)](https://github.com/conect2ai/acoustic_fault/blob/main/01_preprocessing.ipynb)  EDA and Preprocessing
 
--  [![Python](https://img.shields.io/badge/-Notebook-191A1B?style=flat-square&logo=jupyter)]( )  Training Router Model
+-  [![Python](https://img.shields.io/badge/-Notebook-191A1B?style=flat-square&logo=jupyter)](https://github.com/conect2ai/acoustic_fault/blob/main/02_training_sweep.ipynb)  Training Grid
 
--  [![Python](https://img.shields.io/badge/-Notebook-191A1B?style=flat-square&logo=jupyter)]( )  Training Expert Model
+-  [![Python](https://img.shields.io/badge/-Notebook-191A1B?style=flat-square&logo=jupyter)](https://github.com/conect2ai/acoustic_fault/blob/main/03_counter_parameters.ipynb)  Counter C++ parameters
 
+-  [![Python](https://img.shields.io/badge/-Notebook-191A1B?style=flat-square&logo=jupyter)](https://github.com/conect2ai/acoustic_fault/blob/main/04_result_visualization.ipynb)  Result visualization
 
 ## 📚 Arduino Code
 
