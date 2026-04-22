@@ -27,23 +27,31 @@ The analysis spans **nine commercial microcontrollers** and two acoustic feature
 
 ## 📁 Repository Structure
 ```plaintext
-TINYMOE/
+ACOUSTIC_FAULT/
 ├── .venv/                         # Python virtual environment
 ├── data/                          # Datasets and preprocessing artifacts
 ├── figures/                       # Figures used in the paper and documentation
+├── models/                        # Model architectures and code generation
+│   ├── __init__.py
+│   ├── cnn.py
+│   ├── fan_code_generation.py
+│   ├── fan.py
+│   ├── kan_code_generation.py
+│   ├── rbfn_code_generator.py
+│   └── rbfn.py
 ├── results/
-│   ├── arduino_models/            # Exported expert models for MCU deployment
-│   ├── arduino_sketchs/           # Arduino sketches for embedded inference
-│   ├── evaluation/                # Quantitative evaluation results
-│   └── json_models/               # Serialized expert and router models
-├── src/                           # Core source code
+│   ├── arduino_code/              # Generated Arduino deployment code
+│   ├── csv_files/                 # Experimental results in CSV format
+│   └── training/                 # Training logs and checkpoints
 ├── .gitignore
-├── 01_dataset_generator.ipynb     # Dataset generation from PDF manuals
-├── 02_training_router.ipynb       # Training of the semantic routing mechanism
-├── 03_training_model.ipynb        # Training of TinyGPT domain experts
+├── 01_preprocessing.ipynb         # Data preprocessing pipeline
+├── 02_training_sweep.ipynb        # Hyperparameter sweep experiments
+├── 03_counter_parameters.ipynb    # Model parameter analysis
+├── 04_result_visualization.ipynb  # Visualization of results
 ├── LICENSE
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── sweep_config.yaml              # Configuration for training sweeps
 ````
 
 ## 📤 Installation
